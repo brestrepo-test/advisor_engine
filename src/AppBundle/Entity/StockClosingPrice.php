@@ -4,8 +4,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Model to get the daily adjusted close from equity
+ *
  * @ORM\Entity
- * @ORM\Table(name="stock_closing_prices")
+ * @ORM\Table(name="stock_closing_prices",uniqueConstraints={@ORM\UniqueConstraint(name="symbol_date_uq", columns={"symbol", "date"})})
  */
 class StockClosingPrice
 {
@@ -23,9 +25,9 @@ class StockClosingPrice
 
     /**
      * @ORM\ManyToOne(targetEntity="Stock")
-     * @ORM\JoinColumn(name="stock_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="symbol", referencedColumnName="symbol")
      */
-    private $stock;
+    private $symbol;
 
     /**
      * @ORM\Column(type="decimal", precision=7, scale=2)
@@ -67,17 +69,17 @@ class StockClosingPrice
     /**
      * @return mixed
      */
-    public function getStock()
+    public function getSymbol()
     {
-        return $this->stock;
+        return $this->symbol;
     }
 
     /**
-     * @param mixed $stock
+     * @param mixed $symbol
      */
-    public function setStock($stock)
+    public function setSymbol($symbol)
     {
-        $this->stock = $stock;
+        $this->symbol = $symbol;
     }
 
     /**

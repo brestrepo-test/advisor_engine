@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Transactions list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Operation</th>
+                <th>Amount</th>
+                <th>Unitprice</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for transaction in transactions %}
+            <tr>
+                <td><a href="{{ path('transaction_show', { 'id': transaction.id }) }}">{{ transaction.id }}</a></td>
+                <td>{% if transaction.date %}{{ transaction.date|date('Y-m-d') }}{% endif %}</td>
+                <td>{{ transaction.operation }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.unitPrice }}</td>
+                <td>{{ transaction.price }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('transaction_show', { 'id': transaction.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('transaction_edit', { 'id': transaction.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('transaction_new') }}">Create a new transaction</a>
+        </li>
+    </ul>
+{% endblock %}

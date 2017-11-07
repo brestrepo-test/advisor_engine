@@ -33,3 +33,15 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+    AppBundle\Util\AlphaAdvantageClient:
+        class: AppBundle\Util\AlphaAdvantageClient
+
+    AppBundle\Util\StockPriceService:
+        class: AppBundle\Util\StockPriceService
+        arguments: ['@doctrine.orm.entity_manager', '@AppBundle\Util\AlphaAdvantageClient']
+
+    ##Interfaces
+    ##This is to make the auto-wiring work and still use interfaces
+    AppBundle\Util\Interfaces\FinancialServiceClientInterface: '@AppBundle\Util\AlphaAdvantageClient'
+
+    AppBundle\Util\Interfaces\StockPriceServiceInterface: '@AppBundle\Util\StockPriceService'

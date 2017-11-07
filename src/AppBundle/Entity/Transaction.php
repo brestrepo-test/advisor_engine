@@ -26,15 +26,25 @@ class Transaction
 
     /**
      * @ORM\ManyToOne(targetEntity="Stock")
-     * @ORM\JoinColumn(name="stock_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="symbol", referencedColumnName="symbol")
      */
-    private $stock;
+    private $symbol;
 
     /** @ORM\Column(type="string") */
     private $operation;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $amount;
+
+    /**
      * @ORM\Column(type="decimal", precision=7, scale=2)
+     */
+    private $unitPrice;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $price;
 
@@ -73,17 +83,49 @@ class Transaction
     /**
      * @return mixed
      */
-    public function getStock()
+    public function getSymbol()
     {
-        return $this->stock;
+        return $this->symbol;
     }
 
     /**
-     * @param mixed $stock
+     * @param mixed $symbol
      */
-    public function setStock($stock)
+    public function setSymbol($symbol)
     {
-        $this->stock = $stock;
+        $this->symbol = $symbol;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getamount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param mixed $amount
+     */
+    public function setamount($amount)
+    {
+        $this->amount = $amount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUnitPrice()
+    {
+        return $this->unitPrice;
+    }
+
+    /**
+     * @param mixed $unitPrice
+     */
+    public function setUnitPrice($unitPrice)
+    {
+        $this->unitPrice = $unitPrice;
     }
 
     /**
@@ -111,7 +153,7 @@ class Transaction
     }
 
     /**
-     * @param $operation
+     * @param string $operation
      */
     public function setOperation($operation)
     {
