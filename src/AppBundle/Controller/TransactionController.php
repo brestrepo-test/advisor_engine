@@ -1,8 +1,8 @@
 <?php
-
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Transaction;
+use AppBundle\Util\Interfaces\PortfolioInterface;
 use AppBundle\Util\Interfaces\StockPriceServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,9 +18,22 @@ class TransactionController extends Controller
      */
     private $stockPriceService;
 
-    public function __construct(StockPriceServiceInterface $stockPriceService)
-    {
+    /**
+     * @var PortfolioInterface
+     */
+    private $portfolioService;
+
+    /**
+     * TransactionController constructor.
+     * @param StockPriceServiceInterface $stockPriceService
+     * @param PortfolioInterface $portfolioService
+     */
+    public function __construct(
+        StockPriceServiceInterface $stockPriceService,
+        PortfolioInterface $portfolioService
+    ) {
         $this->stockPriceService = $stockPriceService;
+        $this->portfolioService = $portfolioService;
     }
 
     /**
@@ -29,7 +42,6 @@ class TransactionController extends Controller
      */
     public function indexAction()
     {
-        $this->stockPriceService->updateStockClosingPriceForSymbols(['MSFT', 'MU']);
         $em = $this->getDoctrine()->getManager();
 
         $transactions = $em->getRepository('AppBundle:Transaction')->findAll();
@@ -48,19 +60,34 @@ class TransactionController extends Controller
         $transaction = new Transaction();
         $form = $this->createForm('AppBundle\Form\TransactionType', $transaction);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($transaction);
-            $em->flush();
-
-            return $this->redirectToRoute('transaction_show', array('id' => $transaction->getId()));
-        }
-
-        return $this->render('transaction/new.html.twig', array(
+        $parameters = [
             'transaction' => $transaction,
             'form' => $form->createView(),
-        ));
+            'errors' => []
+        ];
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            list($stock, $price) = $this->stockPriceService->getStockInformation($form->get('stock')->getData(), $transaction->getDate());
+
+            if (is_null($stock)) {
+                $parameters['errors'][] = "We couldn't add your transaction. Check the symbol name or try again later.";
+            } elseif (is_null($price)) {
+                $parameters['errors'][] = "We couldn't add your transaction. Check the the date (normally M-F) or try again later.";
+            } else {
+                $transaction->setSymbol($stock);
+                $transaction->setUnitPrice($price);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($transaction);
+                $em->flush();
+
+                $this->portfolioService->updatePortfolio($stock);
+
+                return $this->redirectToRoute('transaction_show', array('id' => $transaction->getId()));
+            }
+        }
+
+        return $this->render('transaction/new.html.twig', $parameters);
     }
 
     /**
@@ -69,11 +96,8 @@ class TransactionController extends Controller
      */
     public function showAction(Transaction $transaction)
     {
-        $deleteForm = $this->createDeleteForm($transaction);
-
         return $this->render('transaction/show.html.twig', array(
             'transaction' => $transaction,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -83,54 +107,52 @@ class TransactionController extends Controller
      */
     public function editAction(Request $request, Transaction $transaction)
     {
-        $deleteForm = $this->createDeleteForm($transaction);
         $editForm = $this->createForm('AppBundle\Form\TransactionType', $transaction);
         $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('transaction_edit', array('id' => $transaction->getId()));
-        }
-
-        return $this->render('transaction/edit.html.twig', array(
+        $parameters = [
             'transaction' => $transaction,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+            'errors' => []
+        ];
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            list($stock, $price) = $this->stockPriceService->getStockInformation($editForm->get('stock')->getData(), $transaction->getDate());
+
+            if (is_null($stock)) {
+                $parameters['errors'][] = "We couldn't add your transaction. Check the symbol name or try again later.";
+            } elseif (is_null($price)) {
+                $parameters['errors'][] = "We couldn't add your transaction. Check the the date (normally M-F) or try again later.";
+            } else {
+                $transaction->setSymbol($stock);
+                $transaction->setUnitPrice($price);
+
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->portfolioService->updatePortfolio($stock);
+
+                return $this->redirectToRoute('transaction_edit', array('id' => $transaction->getId()));
+            }
+        }
+
+        return $this->render('transaction/edit.html.twig', $parameters);
     }
 
     /**
      * Deletes a transaction entity.
      *
      */
-    public function deleteAction(Request $request, Transaction $transaction)
+    public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($transaction);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        $transaction = $em->getRepository('AppBundle:Transaction')->find($id);
+        if (!empty($transaction)) {
+            $stock = $transaction->getSymbol();
             $em->remove($transaction);
             $em->flush();
+
+            $this->portfolioService->updatePortfolio($stock);
+
         }
-
         return $this->redirectToRoute('transaction_index');
-    }
-
-    /**
-     * Creates a form to delete a transaction entity.
-     *
-     * @param Transaction $transaction The transaction entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Transaction $transaction)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('transaction_delete', array('id' => $transaction->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
     }
 }

@@ -45,15 +45,20 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
     public function updateStockClosingPriceForSymbols(array $symbols)
     {
         foreach ($symbols as $symbol) {
-            $lastClosingPrice = $this->getSymbolLastStoredClosingPrice($symbol);
-            try {
-                $historicPrices = $this->client->fetchDailyStockTimeSeries($symbol, $lastClosingPrice);
-            } catch (\Exception $e) {
-                throw new \Exception("{$symbol} cant be fetched", 0, $e);
-            }
+            $lastClosingPrice = $this->getSymbolLastStoredClosingPriceDate($symbol);
+            $yesterday = (new \DateTime())->sub(new \DateInterval('P1D'));
+            
+            //We only want to update if the last closing price we have is not from yesterday
+            if ((is_null($lastClosingPrice)) || ($lastClosingPrice->format('Y-m-d') !== $yesterday->format('Y-m-d'))) {
+                try {
+                    $historicPrices = $this->client->fetchDailyStockTimeSeries($symbol, $lastClosingPrice);
+                } catch (\Exception $e) {
+                    throw new \Exception("{$symbol} cant be fetched", 0, $e);
+                }
 
-            $stock = $this->findOrCreateStock($symbol);
-            $this->batchInsertStockClosingPrices($stock, $historicPrices);
+                $stock = $this->findOrCreateStock($symbol);
+                $this->batchInsertStockClosingPrices($stock, $historicPrices);
+            }
         }
     }
 
@@ -61,13 +66,26 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
      * @param $symbol
      * @return mixed
      */
-    private function getSymbolLastStoredClosingPrice($symbol)
+    private function getSymbolLastStoredClosingPriceDate($symbol)
     {
         $lastClosingPrice = $this->entityManager
             ->getRepository('AppBundle\Entity\StockClosingPrice')
             ->findOneBy(['symbol' => $symbol], ['date' => 'DESC']);
 
-        return $lastClosingPrice;
+        return (!empty($lastClosingPrice)) ? $lastClosingPrice->getDate() : null;
+    }
+
+    /**
+     * @param $symbol
+     * @return mixed
+     */
+    public function getSymbolLastStoredClosingPrice($symbol)
+    {
+        $lastClosingPrice = $this->entityManager
+            ->getRepository('AppBundle\Entity\StockClosingPrice')
+            ->findOneBy(['symbol' => $symbol], ['date' => 'DESC']);
+
+        return (!empty($lastClosingPrice)) ? $lastClosingPrice->getPrice() : null;
     }
 
     /**
@@ -116,5 +134,39 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
         }
         $this->entityManager->flush();
         $this->entityManager->clear();
+    }
+
+    /**
+     * Gets the information for a stock
+     *
+     * @param $symbol
+     * @param $date
+     * @return array
+     * @throws \Exception
+     */
+    public function getStockInformation($symbol, $date)
+    {
+        $this->updateStockClosingPriceForSymbols([ $symbol ]);
+        
+        $stock = $this->findOrCreateStock($symbol);
+        $price = $this->getSymbolPriceForDate($symbol, $date);
+
+        return [ $stock, $price ];
+    }
+
+    /**
+     * Get a symbol price for a date
+     *
+     * @param $symbol
+     * @param $date
+     * @return null
+     */
+    public function getSymbolPriceForDate($symbol, $date)
+    {
+        $price = $this->entityManager
+            ->getRepository('AppBundle\Entity\StockClosingPrice')
+            ->findOneBy(['symbol' => $symbol, 'date' => $date]);
+
+        return (!empty($price)) ? $price->getPrice() : null;
     }
 }

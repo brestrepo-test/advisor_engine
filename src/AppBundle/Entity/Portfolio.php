@@ -5,13 +5,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="transactions")
+ * @ORM\Table(name="portfolio",uniqueConstraints={@ORM\UniqueConstraint(name="symbol", columns={"symbol"})})
  */
-class Transaction
+class Portfolio
 {
-    const OPERATION_BUY = 'Buy';
-    const OPERATION_SELL = 'Sell';
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -20,18 +17,10 @@ class Transaction
     private $id;
 
     /**
-     * @ORM\Column(type="date")
-     */
-    private $date;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Stock")
      * @ORM\JoinColumn(name="symbol", referencedColumnName="symbol")
      */
     private $symbol;
-
-    /** @ORM\Column(type="string") */
-    private $operation;
 
     /**
      * @ORM\Column(type="integer")
@@ -39,10 +28,16 @@ class Transaction
     private $amount;
 
     /**
-     * @ORM\Column(type="decimal", precision=7, scale=2)
+     * Profit/loss
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
-    private $unitPrice;
-    
+    private $pl;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $lastUpdate;
+
     /**
      * @return mixed
      */
@@ -57,22 +52,6 @@ class Transaction
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param mixed $date
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
     }
 
     /**
@@ -110,34 +89,32 @@ class Transaction
     /**
      * @return mixed
      */
-    public function getUnitPrice()
+    public function getPl()
     {
-        return $this->unitPrice;
+        return $this->pl;
     }
 
     /**
-     * @param mixed $unitPrice
+     * @param mixed $pl
      */
-    public function setUnitPrice($unitPrice)
+    public function setPl($pl)
     {
-        $this->unitPrice = $unitPrice;
+        $this->pl = $pl;
     }
 
     /**
      * @return mixed
      */
-    public function getOperation()
+    public function getLastUpdate()
     {
-        return $this->operation;
+        return $this->lastUpdate;
     }
 
     /**
-     * @param string $operation
+     * @param mixed $lastUpdate
      */
-    public function setOperation($operation)
+    public function setLastUpdate($lastUpdate)
     {
-        if (in_array($operation, [ self::OPERATION_BUY, self::OPERATION_SELL])) {
-            $this->operation = $operation;
-        }
+        $this->lastUpdate = $lastUpdate;
     }
 }

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Summary</h1>
+
+    <table class="table">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Symbol</th>
+            <th>Amount</th>
+            <th>PL</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in portfolio %}
+            <tr>
+                <td>{{ item.symbol.symbol }}</td>
+                <td>{{ item.amount }}</td>
+                <td>$ {{ item.pl|number_format(2) }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

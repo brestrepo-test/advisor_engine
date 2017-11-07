@@ -40,8 +40,14 @@ services:
         class: AppBundle\Util\StockPriceService
         arguments: ['@doctrine.orm.entity_manager', '@AppBundle\Util\AlphaAdvantageClient']
 
+    AppBundle\Util\PortfolioService:
+        class: AppBundle\Util\PortfolioService
+        arguments: ['@doctrine.orm.entity_manager', '@AppBundle\Util\StockPriceService']
+
     ##Interfaces
     ##This is to make the auto-wiring work and still use interfaces
     AppBundle\Util\Interfaces\FinancialServiceClientInterface: '@AppBundle\Util\AlphaAdvantageClient'
 
     AppBundle\Util\Interfaces\StockPriceServiceInterface: '@AppBundle\Util\StockPriceService'
+
+    AppBundle\Util\Interfaces\PortafolioInterface: '@AppBundle\Util\PortfolioService'

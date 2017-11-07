@@ -3,7 +3,14 @@
 {% block body %}
     <h1>Transaction</h1>
 
-    <table>
+    <div class="btn-group" role="group" aria-label="...">
+        <a type="button" href="{{ path('transaction_index') }}" class="btn btn-default">Back to the list</a>
+        <a type="button" href="{{ path('transaction_edit', { 'id': transaction.id }) }}" class="btn btn-default">Edit</a>
+        <a type="button" href="{{ path('transaction_delete', { 'id': transaction.id }) }}" class="btn btn-default">Delete</a>
+    </div>
+
+    <br /><br />
+    <table class="table">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -14,6 +21,10 @@
                 <td>{% if transaction.date %}{{ transaction.date|date('Y-m-d') }}{% endif %}</td>
             </tr>
             <tr>
+                <th>Symbol</th>
+                <td>{{ transaction.symbol.symbol }}</td>
+            </tr>
+            <tr>
                 <th>Operation</th>
                 <td>{{ transaction.operation }}</td>
             </tr>
@@ -22,27 +33,9 @@
                 <td>{{ transaction.amount }}</td>
             </tr>
             <tr>
-                <th>Unitprice</th>
+                <th>Unit Price</th>
                 <td>{{ transaction.unitPrice }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ transaction.price }}</td>
             </tr>
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('transaction_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('transaction_edit', { 'id': transaction.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock %}

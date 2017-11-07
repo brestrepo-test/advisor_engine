@@ -5,6 +5,16 @@ use Symfony\Component\Routing\Route;
 
 $collection = new RouteCollection();
 
+$collection->add('index', new Route(
+    '/',
+    array('_controller' => 'AppBundle:Summary:index'),
+    array(),
+    array(),
+    '',
+    array(),
+    array('GET')
+));
+
 $collection->add('transaction_index', new Route(
     '/transactions/',
     array('_controller' => 'AppBundle:Transaction:index'),
@@ -52,7 +62,7 @@ $collection->add('transaction_delete', new Route(
     array(),
     '',
     array(),
-    array('DELETE')
+    array('GET')
 ));
 
 return $collection;

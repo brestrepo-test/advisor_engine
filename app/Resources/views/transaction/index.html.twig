@@ -1,17 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Transactions list</h1>
+    <h1>Transactions History</h1>
 
-    <table>
-        <thead>
+    <table class="table">
+        <thead class="thead-inverse">
             <tr>
                 <th>Id</th>
+                <th>Symbol</th>
                 <th>Date</th>
                 <th>Operation</th>
                 <th>Amount</th>
-                <th>Unitprice</th>
-                <th>Price</th>
+                <th>Unit Price</th>
+                <th>Total</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -19,11 +20,12 @@
         {% for transaction in transactions %}
             <tr>
                 <td><a href="{{ path('transaction_show', { 'id': transaction.id }) }}">{{ transaction.id }}</a></td>
+                <td>{{ transaction.symbol.symbol }}</td>
                 <td>{% if transaction.date %}{{ transaction.date|date('Y-m-d') }}{% endif %}</td>
                 <td>{{ transaction.operation }}</td>
                 <td>{{ transaction.amount }}</td>
-                <td>{{ transaction.unitPrice }}</td>
-                <td>{{ transaction.price }}</td>
+                <td>$ {{ transaction.unitPrice|number_format(2) }}</td>
+                <td>$ {{ transaction.unitPrice*transaction.amount|number_format(2) }}</td>
                 <td>
                     <ul>
                         <li>

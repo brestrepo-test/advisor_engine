@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +14,26 @@ class TransactionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('date')->add('operation')->add('amount')->add('unitPrice')->add('price')->add('stock');
+        $symbol = (!empty($options['data']->getSymbol())) ? $options['data']->getSymbol()->getSymbol() : '';
+
+        $builder
+            ->add(
+                'stock',
+                null,
+                [
+                    'required' => true,
+                    'mapped' => false,
+                    'data' => $symbol
+                ]
+            )
+            ->add('date')
+            ->add('operation', ChoiceType::class, array(
+                'choices'  => array(
+                    'Buy' => 'Buy',
+                    'Sell' => 'Sell',
+                ),
+            ))
+            ->add('amount');
     }
     
     /**
