@@ -25,13 +25,12 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
 
     /**
      * StockPriceService constructor.
+     *
      * @param EntityManagerInterface $entityManager
      * @param Interfaces\FinancialServiceClientInterface $client
      */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        Interfaces\FinancialServiceClientInterface $client
-    ) {
+    public function __construct(EntityManagerInterface $entityManager, Interfaces\FinancialServiceClientInterface $client)
+    {
         $this->entityManager = $entityManager;
         $this->client = $client;
     }
@@ -40,6 +39,7 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
      * Updates stock closing prices for a list of symbols
      *
      * @param array $symbols
+     *
      * @throws \Exception
      */
     public function updateStockClosingPriceForSymbols(array $symbols)
@@ -63,20 +63,8 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
     }
 
     /**
-     * @param $symbol
-     * @return mixed
-     */
-    private function getSymbolLastStoredClosingPriceDate($symbol)
-    {
-        $lastClosingPrice = $this->entityManager
-            ->getRepository('AppBundle\Entity\StockClosingPrice')
-            ->findOneBy(['symbol' => $symbol], ['date' => 'DESC']);
-
-        return (!empty($lastClosingPrice)) ? $lastClosingPrice->getDate() : null;
-    }
-
-    /**
-     * @param $symbol
+     * @param string $symbol
+     *
      * @return mixed
      */
     public function getSymbolLastStoredClosingPrice($symbol)
@@ -89,9 +77,61 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
     }
 
     /**
+     * Gets the information for a stock
+     *
+     * @param string $symbol
+     * @param \DateTime $date
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
+    public function getStockInformation($symbol, $date)
+    {
+        $this->updateStockClosingPriceForSymbols([ $symbol ]);
+
+        $stock = $this->findOrCreateStock($symbol);
+        $price = $this->getSymbolPriceForDate($symbol, $date);
+
+        return [ $stock, $price ];
+    }
+
+    /**
+     * Get a symbol price for a date
+     *
+     * @param string $symbol
+     * @param \DateTime $date
+     *
+     * @return null
+     */
+    public function getSymbolPriceForDate($symbol, $date)
+    {
+        $price = $this->entityManager
+            ->getRepository('AppBundle\Entity\StockClosingPrice')
+            ->findOneBy(['symbol' => $symbol, 'date' => $date]);
+
+        return (!empty($price)) ? $price->getPrice() : null;
+    }
+
+    /**
+     * @param string $symbol
+     *
+     * @return mixed
+     */
+    private function getSymbolLastStoredClosingPriceDate($symbol)
+    {
+        $lastClosingPrice = $this->entityManager
+            ->getRepository('AppBundle\Entity\StockClosingPrice')
+            ->findOneBy(['symbol' => $symbol], ['date' => 'DESC']);
+
+        return (!empty($lastClosingPrice)) ? $lastClosingPrice->getDate() : null;
+    }
+
+    /**
      * Retrieves and creates if needed a stock
      *
-     * @param $symbol
+     * @param string $symbol
+     *
      * @return Stock|array
      */
     private function findOrCreateStock($symbol)
@@ -113,8 +153,9 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
     /**
      * Batch inserts the historic of closing prices for a stock
      *
-     * @param $stock
-     * @param $historicPrices
+     * @param Stock $stock
+     *
+     * @param array $historicPrices
      */
     private function batchInsertStockClosingPrices($stock, $historicPrices)
     {
@@ -134,39 +175,5 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
         }
         $this->entityManager->flush();
         $this->entityManager->clear();
-    }
-
-    /**
-     * Gets the information for a stock
-     *
-     * @param $symbol
-     * @param $date
-     * @return array
-     * @throws \Exception
-     */
-    public function getStockInformation($symbol, $date)
-    {
-        $this->updateStockClosingPriceForSymbols([ $symbol ]);
-        
-        $stock = $this->findOrCreateStock($symbol);
-        $price = $this->getSymbolPriceForDate($symbol, $date);
-
-        return [ $stock, $price ];
-    }
-
-    /**
-     * Get a symbol price for a date
-     *
-     * @param $symbol
-     * @param $date
-     * @return null
-     */
-    public function getSymbolPriceForDate($symbol, $date)
-    {
-        $price = $this->entityManager
-            ->getRepository('AppBundle\Entity\StockClosingPrice')
-            ->findOneBy(['symbol' => $symbol, 'date' => $date]);
-
-        return (!empty($price)) ? $price->getPrice() : null;
     }
 }

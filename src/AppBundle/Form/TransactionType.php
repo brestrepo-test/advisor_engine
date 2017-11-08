@@ -23,7 +23,7 @@ class TransactionType extends AbstractType
                 [
                     'required' => true,
                     'mapped' => false,
-                    'data' => $symbol
+                    'data' => $symbol,
                 ]
             )
             ->add('date')
@@ -42,7 +42,7 @@ class TransactionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Transaction'
+            'data_class' => 'AppBundle\Entity\Transaction',
         ));
     }
 
@@ -53,6 +53,4 @@ class TransactionType extends AbstractType
     {
         return 'appbundle_transaction';
     }
-
-
 }

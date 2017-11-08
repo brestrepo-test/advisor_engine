@@ -25,19 +25,19 @@ class TransactionController extends Controller
 
     /**
      * TransactionController constructor.
+     *
      * @param StockPriceServiceInterface $stockPriceService
      * @param PortfolioInterface $portfolioService
      */
-    public function __construct(
-        StockPriceServiceInterface $stockPriceService,
-        PortfolioInterface $portfolioService
-    ) {
+    public function __construct(StockPriceServiceInterface $stockPriceService, PortfolioInterface $portfolioService)
+    {
         $this->stockPriceService = $stockPriceService;
         $this->portfolioService = $portfolioService;
     }
 
     /**
      * Lists all transaction entities.
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
@@ -54,6 +54,9 @@ class TransactionController extends Controller
     /**
      * Creates a new transaction entity.
      *
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -63,7 +66,7 @@ class TransactionController extends Controller
         $parameters = [
             'transaction' => $transaction,
             'form' => $form->createView(),
-            'errors' => []
+            'errors' => [],
         ];
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -93,6 +96,9 @@ class TransactionController extends Controller
     /**
      * Finds and displays a transaction entity.
      *
+     * @param Transaction $transaction
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Transaction $transaction)
     {
@@ -104,6 +110,10 @@ class TransactionController extends Controller
     /**
      * Displays a form to edit an existing transaction entity.
      *
+     * @param Request $request
+     * @param Transaction $transaction
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, Transaction $transaction)
     {
@@ -112,7 +122,7 @@ class TransactionController extends Controller
         $parameters = [
             'transaction' => $transaction,
             'edit_form' => $editForm->createView(),
-            'errors' => []
+            'errors' => [],
         ];
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -140,6 +150,10 @@ class TransactionController extends Controller
     /**
      * Deletes a transaction entity.
      *
+     * @param Request $request
+     * @param integer $id
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, $id)
     {
@@ -151,8 +165,8 @@ class TransactionController extends Controller
             $em->flush();
 
             $this->portfolioService->updatePortfolio($stock);
-
         }
+
         return $this->redirectToRoute('transaction_index');
     }
 }

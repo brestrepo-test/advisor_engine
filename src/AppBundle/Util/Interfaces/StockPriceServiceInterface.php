@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Util\Interfaces;
 
+use AppBundle\Entity\Stock;
+
 /**
  * Interface StockPriceServiceInterface
  */
@@ -12,14 +14,16 @@ interface StockPriceServiceInterface
     public function updateStockClosingPriceForSymbols(array $symbols);
 
     /**
-     * @param $symbol
-     * @param $date
+     * @param Stock $symbol
+     * @param \DateTime $date
+     *
      * @return mixed
      */
     public function getStockInformation($symbol, $date);
 
     /**
-     * @param $symbol
+     * @param Stock $symbol
+     *
      * @return mixed
      */
     public function getSymbolLastStoredClosingPrice($symbol);

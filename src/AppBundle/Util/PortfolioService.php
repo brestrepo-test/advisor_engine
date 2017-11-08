@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class PortfolioService
- * @package AppBundle\Util
  */
 class PortfolioService implements Interfaces\PortfolioInterface
 {
@@ -24,20 +23,19 @@ class PortfolioService implements Interfaces\PortfolioInterface
 
     /**
      * PortfolioService constructor.
+     *
      * @param EntityManagerInterface $entityManager
      * @param StockPriceServiceInterface $stockPriceService
      */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        StockPriceServiceInterface $stockPriceService
-    ) {
+    public function __construct(EntityManagerInterface $entityManager, StockPriceServiceInterface $stockPriceService)
+    {
 
         $this->stockPriceService = $stockPriceService;
         $this->entityManager = $entityManager;
     }
 
     /**
-     * @param $portfolio
+     * @param array $portfolio
      */
     public function updatePortfolioValue($portfolio)
     {
@@ -76,8 +74,9 @@ class PortfolioService implements Interfaces\PortfolioInterface
     }
 
     /**
-     * @param $transactions
-     * @param $price
+     * @param array $transactions
+     * @param float $price
+     *
      * @return array
      */
     private function calculatePLAndAmount($transactions, $price)

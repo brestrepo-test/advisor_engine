@@ -31,16 +31,18 @@ class AlphaAdvantageClient implements Interfaces\FinancialServiceClientInterface
     /**
      * Fetches the daily time series from alpha advantage
      *
-     * @param $symbol
-     * @param $fromDate
+     * @param string $symbol
+     * @param null|\DateTime $fromDate
+     *
      * @return array
+     *
      * @throws \Exception
      */
     public function fetchDailyStockTimeSeries($symbol, $fromDate)
     {
         $uri = $this->getUri($symbol);
 
-        if ((!is_null($fromDate)) && (!$fromDate instanceOf \DateTime)) {
+        if ((!is_null($fromDate)) && (!$fromDate instanceof \DateTime)) {
             throw new \Exception('From date must be an instance of DateTime or null');
         }
 
@@ -56,7 +58,8 @@ class AlphaAdvantageClient implements Interfaces\FinancialServiceClientInterface
     /**
      * Returns the uri to fetch the daily time series for a specified symbol
      *
-     * @param $symbol
+     * @param string $symbol
+     *
      * @return string
      */
     private function getUri($symbol)
@@ -67,7 +70,7 @@ class AlphaAdvantageClient implements Interfaces\FinancialServiceClientInterface
                 self::TIME_SERIES_DAILY_ADJUSTED_URL,
                 "symbol={$symbol}",
                 "apikey=".self::API_KEY,
-                "datatype=json"
+                "datatype=json",
             ]
         );
     }
@@ -75,23 +78,25 @@ class AlphaAdvantageClient implements Interfaces\FinancialServiceClientInterface
     /**
      * Returns the transformed results
      *
-     * @param $symbol
+     * @param string $symbol
      * @param array $results
-     * @param $fromDate
+     * @param null|\DateTime $fromDate
+     *
      * @return array
+     *
      * @throws \Exception
      */
     private function sortResults($symbol, array $results, $fromDate)
     {
         if (!empty($results)) {
-            if (strpos(strtolower(array_keys($results)[0]), 'error') === false) {
-                return $this->transformResults($symbol, $results, $fromDate);
-            } else {
+            if (strpos(strtolower(array_keys($results)[0]), 'error') !== false) {
                 //You would hope the api would throw a 404 in this case. But we get an error message
                 //with a 200 status code.
                 //With more time, we would like to separate this exceptions into different types of exception
                 //So we can catch easily what was the reason for the failure
                 throw new \Exception("The symbol you requested is not valid");
+            } else {
+                return $this->transformResults($symbol, $results, $fromDate);
             }
         } else {
             throw new \Exception("The results obtained are empty or corrupted");
@@ -101,10 +106,12 @@ class AlphaAdvantageClient implements Interfaces\FinancialServiceClientInterface
     /**
      * Transform the results from the response to Model\HistoricClose
      *
-     * @param $symbol
-     * @param $results
-     * @param $fromDate
+     * @param string $symbol
+     * @param array $results
+     * @param null|\DateTime $fromDate
+     *
      * @return array
+     *
      * @throws \Exception
      */
     private function transformResults($symbol, $results, $fromDate)

@@ -3,16 +3,20 @@ namespace AppBundle\Util\Interfaces;
 
 use AppBundle\Entity\Stock;
 
+/**
+ * Interface PortfolioInterface
+ */
 interface PortfolioInterface
 {
     /**
-     * @param $portfolio
+     * @param array $portfolio
+     *
      * @return mixed
      */
     public function updatePortfolioValue($portfolio);
 
     /**
-     * @param $stock
+     * @param Stock $stock
      */
     public function updatePortfolio(Stock $stock);
 }
