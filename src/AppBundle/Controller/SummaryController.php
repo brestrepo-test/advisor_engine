@@ -41,8 +41,7 @@ class SummaryController extends Controller
         $totalInvestment = 0;
         $totalPL = 0;
 
-        foreach ($portfolio as $item)
-        {
+        foreach ($portfolio as $item) {
             $totalInvestment += $item->getTotalInvestment();
             $totalPL += $item->getPl();
         }
@@ -52,7 +51,7 @@ class SummaryController extends Controller
             [
                 'portfolio' => $portfolio,
                 'totalInvestment' => $totalInvestment,
-                'totalPl' => $totalPL
+                'totalPl' => $totalPL,
             ]
         );
     }

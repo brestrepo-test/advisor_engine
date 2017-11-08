@@ -7,9 +7,9 @@ namespace AppBundle\Util\Interfaces;
 interface FinancialServiceClientInterface
 {
     /**
-     * @param string $symbol
+     * @param string         $symbol
      * @param null|\DateTime $fromDate
-     * 
+     *
      * @return array
      */
     public function fetchDailyStockTimeSeries($symbol, $fromDate);

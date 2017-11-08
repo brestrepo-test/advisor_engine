@@ -27,7 +27,8 @@ class TransactionController extends Controller
      * TransactionController constructor.
      *
      * @param StockPriceServiceInterface $stockPriceService
-     * @param PortfolioInterface $portfolioService
+     * @param PortfolioInterface         $portfolioService
+     *
      */
     public function __construct(StockPriceServiceInterface $stockPriceService, PortfolioInterface $portfolioService)
     {
@@ -110,7 +111,7 @@ class TransactionController extends Controller
     /**
      * Displays a form to edit an existing transaction entity.
      *
-     * @param Request $request
+     * @param Request     $request
      * @param Transaction $transaction
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response

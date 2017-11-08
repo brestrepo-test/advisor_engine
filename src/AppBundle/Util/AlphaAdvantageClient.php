@@ -31,7 +31,7 @@ class AlphaAdvantageClient implements Interfaces\FinancialServiceClientInterface
     /**
      * Fetches the daily time series from alpha advantage
      *
-     * @param string $symbol
+     * @param string         $symbol
      * @param null|\DateTime $fromDate
      *
      * @return array
@@ -78,8 +78,8 @@ class AlphaAdvantageClient implements Interfaces\FinancialServiceClientInterface
     /**
      * Returns the transformed results
      *
-     * @param string $symbol
-     * @param array $results
+     * @param string         $symbol
+     * @param array          $results
      * @param null|\DateTime $fromDate
      *
      * @return array
@@ -88,17 +88,27 @@ class AlphaAdvantageClient implements Interfaces\FinancialServiceClientInterface
      */
     private function sortResults($symbol, array $results, $fromDate)
     {
-        if (!empty($results)) {
-            if (strpos(strtolower(array_keys($results)[0]), 'error') !== false) {
-                //You would hope the api would throw a 404 in this case. But we get an error message
-                //with a 200 status code.
-                //With more time, we would like to separate this exceptions into different types of exception
-                //So we can catch easily what was the reason for the failure
-                throw new \Exception("The symbol you requested is not valid");
-            } else {
-                return $this->transformResults($symbol, $results, $fromDate);
-            }
-        } else {
+        $this->checkIfResultsAreEmpty($results);
+
+        if (strpos(strtolower(array_keys($results)[0]), 'error') !== false) {
+            //You would hope the api would throw a 404 in this case. But we get an error message
+            //with a 200 status code.
+            //With more time, we would like to separate this exceptions into different types of exception
+            //So we can catch easily what was the reason for the failure
+            throw new \Exception("The symbol you requested is not valid");
+        }
+
+        return $this->transformResults($symbol, $results, $fromDate);
+    }
+
+    /**
+     * @param array $results
+     *
+     * @throws \Exception
+     */
+    private function checkIfResultsAreEmpty($results)
+    {
+        if (empty($results)) {
             throw new \Exception("The results obtained are empty or corrupted");
         }
     }
@@ -106,8 +116,8 @@ class AlphaAdvantageClient implements Interfaces\FinancialServiceClientInterface
     /**
      * Transform the results from the response to Model\HistoricClose
      *
-     * @param string $symbol
-     * @param array $results
+     * @param string         $symbol
+     * @param array          $results
      * @param null|\DateTime $fromDate
      *
      * @return array
@@ -117,9 +127,7 @@ class AlphaAdvantageClient implements Interfaces\FinancialServiceClientInterface
     private function transformResults($symbol, $results, $fromDate)
     {
         $historicCloses = [];
-        if (empty($results['Time Series (Daily)'])) {
-            throw new \Exception("The results are not in the format we expected");
-        } else {
+        if (!empty($results['Time Series (Daily)'])) {
             foreach ($results['Time Series (Daily)'] as $date => $information) {
                 $date = new \DateTime($date);
                 if (empty($fromDate) || ($date > $fromDate)) {
@@ -131,6 +139,8 @@ class AlphaAdvantageClient implements Interfaces\FinancialServiceClientInterface
                     $historicCloses[] = $historicClose;
                 }
             }
+        } else {
+            throw new \Exception("The results are not in the format we expected");
         }
 
         return $historicCloses;

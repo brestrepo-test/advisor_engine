@@ -26,7 +26,7 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
     /**
      * StockPriceService constructor.
      *
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManagerInterface                     $entityManager
      * @param Interfaces\FinancialServiceClientInterface $client
      */
     public function __construct(EntityManagerInterface $entityManager, Interfaces\FinancialServiceClientInterface $client)
@@ -79,7 +79,7 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
     /**
      * Gets the information for a stock
      *
-     * @param string $symbol
+     * @param string    $symbol
      * @param \DateTime $date
      *
      * @return array
@@ -99,7 +99,7 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
     /**
      * Get a symbol price for a date
      *
-     * @param string $symbol
+     * @param string    $symbol
      * @param \DateTime $date
      *
      * @return null
@@ -160,7 +160,6 @@ class StockPriceService implements Interfaces\StockPriceServiceInterface
     private function batchInsertStockClosingPrices($stock, $historicPrices)
     {
         foreach ($historicPrices as $index => $historicPrice) {
-
             $stockClosingPrice = new StockClosingPrice();
             $stockClosingPrice->setDate($historicPrice->date);
             $stockClosingPrice->setSymbol($stock);

@@ -14,7 +14,7 @@ interface StockPriceServiceInterface
     public function updateStockClosingPriceForSymbols(array $symbols);
 
     /**
-     * @param Stock $symbol
+     * @param Stock     $symbol
      * @param \DateTime $date
      *
      * @return mixed

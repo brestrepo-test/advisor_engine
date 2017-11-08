@@ -24,7 +24,7 @@ class PortfolioService implements Interfaces\PortfolioInterface
     /**
      * PortfolioService constructor.
      *
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManagerInterface     $entityManager
      * @param StockPriceServiceInterface $stockPriceService
      */
     public function __construct(EntityManagerInterface $entityManager, StockPriceServiceInterface $stockPriceService)
@@ -93,7 +93,6 @@ class PortfolioService implements Interfaces\PortfolioInterface
                 $amountOwned += $amountTransaction;
                 $transactionPL[] =  ($price * $transaction->getAmount()) - ($transaction->getUnitPrice() * $transaction->getAmount());
             } else {
-
                 //If there is a point when we sell all from a stock we start the count again
                 //Obviously a full version would have controls that prevent you from selling stock you don't own
                 //But in this case we want to keep it simple and allow you to do that.
