@@ -10,7 +10,7 @@
 - cd advisor_engine
 - composer install
     - In this step you will be prompted to configure your database access
-- php bin/console doctrine:schema:update
+- php bin/console doctrine:schema:update --force
 - php bin/console server:run
 - Open a browser and goto http://127.0.0.1:8000
 
