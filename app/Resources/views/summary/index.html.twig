@@ -8,7 +8,8 @@
         <tr>
             <th>Symbol</th>
             <th>Amount</th>
-            <th>PL</th>
+            <th>Value</th>
+            <th>P/L</th>
         </tr>
         </thead>
         <tbody>
@@ -16,9 +17,25 @@
             <tr>
                 <td>{{ item.symbol.symbol }}</td>
                 <td>{{ item.amount }}</td>
+                <td>$ {{ item.totalInvestment|number_format(2) }}</td>
                 <td>$ {{ item.pl|number_format(2) }}</td>
             </tr>
         {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead class="thead-inverse">
+        <tr>
+            <th>Total Investment</th>
+            <th>Total P/L</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>$ {{ totalInvestment|number_format(2) }}</td>
+                <td>$ {{ totalPl|number_format(2) }}</td>
+            </tr>
         </tbody>
     </table>
 {% endblock %}

@@ -56,7 +56,7 @@ class PortfolioService implements Interfaces\PortfolioInterface
     {
         $transactions = $this->entityManager->getRepository('AppBundle:Transaction')->findBy(['symbol' => $stock->getSymbol()]);
         $price = $this->stockPriceService->getSymbolLastStoredClosingPrice($stock->getSymbol());
-        list($pl, $amountOwned) = $this->calculatePLAndAmount($transactions, $price);
+        list($pl, $amountOwned, $totalInvestment) = $this->calculatePLAndAmount($transactions, $price);
 
         $portfolio = $this->entityManager->getRepository('AppBundle:Portfolio')->findOneBy(['symbol' => $stock->getSymbol()]);
 
@@ -68,6 +68,7 @@ class PortfolioService implements Interfaces\PortfolioInterface
         $portfolio->setAmount($amountOwned);
         $portfolio->setPl($pl);
         $portfolio->setLastUpdate(new \DateTime());
+        $portfolio->setTotalInvestment($totalInvestment);
 
         $this->entityManager->persist($portfolio);
         $this->entityManager->flush();
@@ -83,6 +84,7 @@ class PortfolioService implements Interfaces\PortfolioInterface
     {
         $amountOwned = 0;
         $transactionPL = [];
+
         foreach ($transactions as $transaction) {
             $operation = ($transaction->getOperation() == Transaction::OPERATION_BUY) ? 1 : -1;
             $amountTransaction = $transaction->getAmount() * $operation;
@@ -90,7 +92,6 @@ class PortfolioService implements Interfaces\PortfolioInterface
             if ($amountOwned+$amountTransaction > 0) {
                 $amountOwned += $amountTransaction;
                 $transactionPL[] =  ($price * $transaction->getAmount()) - ($transaction->getUnitPrice() * $transaction->getAmount());
-
             } else {
 
                 //If there is a point when we sell all from a stock we start the count again
@@ -101,6 +102,8 @@ class PortfolioService implements Interfaces\PortfolioInterface
             }
         }
 
-        return [ array_sum($transactionPL), $amountOwned ];
+        $totalInvestment = $price * $amountOwned;
+
+        return [ array_sum($transactionPL), $amountOwned, $totalInvestment ];
     }
 }

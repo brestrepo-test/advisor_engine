@@ -34,6 +34,11 @@ class Portfolio
     private $pl;
 
     /**
+     * @ORM\Column(type="decimal", precision=10, scale=2)
+     */
+    private $totalInvestment;
+
+    /**
      * @ORM\Column(type="date")
      */
     private $lastUpdate;
@@ -116,5 +121,21 @@ class Portfolio
     public function setLastUpdate($lastUpdate)
     {
         $this->lastUpdate = $lastUpdate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalInvestment()
+    {
+        return $this->totalInvestment;
+    }
+
+    /**
+     * @param mixed $totalInvestment
+     */
+    public function setTotalInvestment($totalInvestment)
+    {
+        $this->totalInvestment = $totalInvestment;
     }
 }

@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cf8462b-471d-423c-8cb0-f6d1f4e9db0a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/AppBundle/Tests/Controller/TransactionControllerTest.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/TransactionController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/TransactionController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Form/TransactionType.php" afterPath="$PROJECT_DIR$/src/AppBundle/Form/TransactionType.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Util/AlphaAdvantageClient.php" afterPath="$PROJECT_DIR$/src/AppBundle/Util/AlphaAdvantageClient.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Util/Interfaces/FinancialServiceClientInterface.php" afterPath="$PROJECT_DIR$/src/AppBundle/Util/Interfaces/FinancialServiceClientInterface.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Util/Interfaces/PortfolioInterface.php" afterPath="$PROJECT_DIR$/src/AppBundle/Util/Interfaces/PortfolioInterface.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Util/Interfaces/StockPriceServiceInterface.php" afterPath="$PROJECT_DIR$/src/AppBundle/Util/Interfaces/StockPriceServiceInterface.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Resources/views/summary/index.html.twig" afterPath="$PROJECT_DIR$/app/Resources/views/summary/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Controller/SummaryController.php" afterPath="$PROJECT_DIR$/src/AppBundle/Controller/SummaryController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Entity/Portfolio.php" afterPath="$PROJECT_DIR$/src/AppBundle/Entity/Portfolio.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Util/PortfolioService.php" afterPath="$PROJECT_DIR$/src/AppBundle/Util/PortfolioService.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/AppBundle/Util/StockPriceService.php" afterPath="$PROJECT_DIR$/src/AppBundle/Util/StockPriceService.php" />
     </list>
     <ignored path="AdvisorEngine.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,18 +38,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TransactionType.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Form/TransactionType.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-              <folding>
-                <element signature="e#34#74#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="AlphaAdvantageClient.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/AlphaAdvantageClient.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -68,8 +51,8 @@
       <file leaf-file-name="StockPriceServiceInterface.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/Interfaces/StockPriceServiceInterface.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+            <state relative-caret-position="420">
+              <caret line="28" column="61" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -78,8 +61,8 @@
       <file leaf-file-name="PortfolioService.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/PortfolioService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="613">
-              <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+            <state relative-caret-position="328">
+              <caret line="70" column="57" selection-start-line="70" selection-start-column="57" selection-end-line="70" selection-end-column="57" />
               <folding>
                 <element signature="e#33#64#0#PHP" expanded="true" />
               </folding>
@@ -87,10 +70,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StockPriceService.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Portfolio.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Portfolio.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="448">
+              <caret line="128" column="20" selection-start-line="128" selection-start-column="20" selection-end-line="128" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StockPriceService.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/StockPriceService.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
+            <state relative-caret-position="2355">
               <caret line="157" column="20" selection-start-line="157" selection-start-column="20" selection-end-line="157" selection-end-column="20" />
               <folding>
                 <element signature="e#33#60#0#PHP" expanded="true" />
@@ -99,11 +92,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FinancialServiceClientInterface.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/Interfaces/FinancialServiceClientInterface.php">
+      <file leaf-file-name="SummaryController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/SummaryController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+            <state relative-caret-position="448">
+              <caret line="46" column="22" selection-start-line="46" selection-start-column="22" selection-end-line="46" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Resources/views/summary/index.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -112,8 +115,8 @@
       <file leaf-file-name="PortfolioInterface.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/Interfaces/PortfolioInterface.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
+            <state relative-caret-position="300">
+              <caret line="20" column="50" selection-start-line="20" selection-start-column="50" selection-end-line="20" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -156,12 +159,9 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/StockClosingPrice.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Util/UpdatePortfolioValue.php" />
         <option value="$PROJECT_DIR$/app/config/services.yml" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Controller/SummaryController.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/transaction/new.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/transaction/edit.html.twig" />
         <option value="$PROJECT_DIR$/app/config/routing.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Portfolio.php" />
-        <option value="$PROJECT_DIR$/app/Resources/views/summary/index.html.twig" />
         <option value="$PROJECT_DIR$/app/Resources/views/base.html.twig" />
         <option value="$PROJECT_DIR$/src/AppBundle/Entity/Transaction.php" />
         <option value="$PROJECT_DIR$/app/Resources/views/transaction/index.html.twig" />
@@ -170,10 +170,13 @@
         <option value="$PROJECT_DIR$/src/AppBundle/Util/Interfaces/FinancialServiceClientInterface.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Controller/TransactionController.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Util/AlphaAdvantageClient.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Util/Interfaces/PortfolioInterface.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Util/Interfaces/StockPriceServiceInterface.php" />
-        <option value="$PROJECT_DIR$/src/AppBundle/Util/PortfolioService.php" />
         <option value="$PROJECT_DIR$/src/AppBundle/Util/StockPriceService.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Util/Interfaces/PortfolioInterface.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Entity/Portfolio.php" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Util/PortfolioService.php" />
+        <option value="$PROJECT_DIR$/app/Resources/views/summary/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/AppBundle/Controller/SummaryController.php" />
       </list>
     </option>
   </component>
@@ -344,7 +347,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Form" />
+              <option name="myItemId" value="Entity" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -428,7 +431,7 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="transaction" />
+              <option name="myItemId" value="summary" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -504,12 +507,12 @@
       <option name="presentableId" value="Default" />
       <updated>1509815612019</updated>
       <workItem from="1509815614143" duration="14740000" />
-      <workItem from="1510064106028" duration="27412000" />
+      <workItem from="1510064106028" duration="28123000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42152000" />
+    <option name="totallyTimeSpent" value="42863000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="824" extended-state="6" />
@@ -785,30 +788,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Portfolio.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1498">
-          <caret line="118" column="5" selection-start-line="118" selection-start-column="5" selection-end-line="118" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/SummaryController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-32">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Resources/views/summary/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="48" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Resources/views/base.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
@@ -859,26 +838,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/Interfaces/FinancialServiceClientInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/TransactionController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-60">
           <caret line="28" column="59" selection-start-line="28" selection-start-column="59" selection-end-line="28" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/Interfaces/PortfolioInterface.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
           <folding />
         </state>
       </provider>
@@ -893,29 +856,69 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/Interfaces/StockPriceServiceInterface.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="420">
+          <caret line="28" column="61" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/Interfaces/PortfolioInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="50" selection-start-line="20" selection-start-column="50" selection-end-line="20" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/PortfolioService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="613">
-          <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+        <state relative-caret-position="328">
+          <caret line="70" column="57" selection-start-line="70" selection-start-column="57" selection-end-line="70" selection-end-column="57" />
           <folding>
             <element signature="e#33#64#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/Interfaces/FinancialServiceClientInterface.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Entity/Portfolio.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="128" column="20" selection-start-line="128" selection-start-column="20" selection-end-line="128" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AppBundle/Util/StockPriceService.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
+        <state relative-caret-position="2355">
           <caret line="157" column="20" selection-start-line="157" selection-start-column="20" selection-end-line="157" selection-end-column="20" />
           <folding>
             <element signature="e#33#60#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Resources/views/summary/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppBundle/Controller/SummaryController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="46" column="22" selection-start-line="46" selection-start-column="22" selection-end-line="46" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>

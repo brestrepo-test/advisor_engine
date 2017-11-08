@@ -38,10 +38,21 @@ class SummaryController extends Controller
         //keeping the user waiting
         $this->portfolioService->updatePortfolioValue($portfolio);
 
+        $totalInvestment = 0;
+        $totalPL = 0;
+
+        foreach ($portfolio as $item)
+        {
+            $totalInvestment += $item->getTotalInvestment();
+            $totalPL += $item->getPl();
+        }
+
         return $this->render(
             'summary/index.html.twig',
             [
                 'portfolio' => $portfolio,
+                'totalInvestment' => $totalInvestment,
+                'totalPl' => $totalPL
             ]
         );
     }
